@@ -1,69 +1,101 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import Link from "next/link";
+import {
+  CalendarIcon,
+  ShieldIcon,
+  TrophyIcon,
+  UserPlusIcon,
+  UsersIcon,
+} from "lucide-react";
+import { BrandLogo } from "@/components/pebol/brand-logo";
+import { PageShell, PitchCard } from "@/components/pebol/page-shell";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  APP_DESCRIPTION,
+  APP_NAME,
+  APP_TAGLINE,
+  BRAND_ASSETS,
+} from "@/lib/brand";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: `${APP_NAME} — ${APP_TAGLINE}`,
+  description: APP_DESCRIPTION,
+  openGraph: {
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
+    images: [{ url: BRAND_ASSETS.og, width: 1200, height: 630, alt: APP_NAME }],
+  },
+};
+
+const steps = [
+  { icon: CalendarIcon, text: "Cria a agenda no admin e manda o link no grupo" },
+  { icon: UsersIcon, text: "Galera confirma VOU / NÃO VOU / TALVEZ" },
+  { icon: TrophyIcon, text: "Lista online com PIX e status de pagamento" },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <PageShell className="gap-0 px-0 py-0">
+      <section className="pitch-hero flex flex-col items-center gap-6 px-4 pb-10 pt-12 text-center">
+        <Badge
+          variant="secondary"
+          className="rounded-full border border-green-900/15 bg-white/70 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-foreground backdrop-blur-sm"
+        >
+          Futebol de quinta
+        </Badge>
+
+        <BrandLogo variant="hero" />
+
+        <p className="max-w-sm text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
+          {APP_DESCRIPTION}
+        </p>
+
+        <div className="flex w-full max-w-sm flex-col gap-3 pt-2">
+          <Button
+            nativeButton={false}
+            render={<Link href="/admin" />}
+            size="lg"
+            className="min-h-12 w-full cursor-pointer border-0 text-base font-semibold shadow-lg shadow-black/20"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <ShieldIcon data-icon="inline-start" />
+            Painel admin
+          </Button>
+          <Button
+            nativeButton={false}
+            render={<Link href="/jogador/criar" />}
+            variant="secondary"
+            size="lg"
+            className="min-h-12 w-full cursor-pointer border border-green-900/20 bg-white/70 text-base font-semibold text-foreground backdrop-blur-sm hover:bg-white/85"
           >
-            Documentation
-          </a>
+            <UserPlusIcon data-icon="inline-start" />
+            Criar cartão de jogador
+          </Button>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <div className="flex flex-col gap-4 px-4 pb-8">
+        <PitchCard className="flex flex-col gap-4">
+          <h2 className="font-heading text-xl tracking-wide text-card-foreground">
+            COMO FUNCIONA
+          </h2>
+          <ol className="flex flex-col gap-4">
+            {steps.map(({ icon: Icon, text }, index) => (
+              <li key={text} className="flex items-start gap-3">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Icon className="size-5" />
+                </span>
+                <div className="flex flex-col gap-0.5 pt-1">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-primary">
+                    Passo {index + 1}
+                  </span>
+                  <span className="text-sm text-muted-foreground">{text}</span>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </PitchCard>
+      </div>
+    </PageShell>
   );
 }

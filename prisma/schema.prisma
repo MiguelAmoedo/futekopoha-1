@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum StatusPresenca {
+  VAI
+  NAO_VAI
+  TALVEZ
+}
+
+model Agenda {
+  id            String   @id @default(cuid())
+  titulo        String
+  dataHora      DateTime
+  local         String?
+  valor         Decimal? @db.Decimal(10, 2)
+  chavePix      String?
+  nomeRecebedor String?
+  cidadePix     String?
+  mensagemPix   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  presencas  Presenca[]
+  pagamentos Pagamento[]
+}
+
+model Presenca {
+  id         String         @id @default(cuid())
+  agendaId   String
+  nome       String
+  status     StatusPresenca
+  sessionKey String?
+  createdAt  DateTime       @default(now())
+
+  agenda Agenda @relation(fields: [agendaId], references: [id], onDelete: Cascade)
+
+  @@unique([agendaId, nome, sessionKey])
+  @@index([agendaId, nome])
+}
+
+model Jogador {
+  id        String   @id @default(cuid())
+  nome      String
+  slug      String   @unique
+  fotoUrl   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  estatistica Estatistica?
+  premios     Premio[]
+}
+
+model Estatistica {
+  jogadorId    String @id
+  pebols       Int    @default(0)
+  gols         Int    @default(0)
+  vitorias     Int    @default(0)
+  assistencias Int    @default(0)
+  premiosCount Int    @default(0)
+
+  jogador Jogador @relation(fields: [jogadorId], references: [id], onDelete: Cascade)
+}
+
+model Premio {
+  id        String    @id @default(cuid())
+  jogadorId String
+  titulo    String
+  descricao String?
+  data      DateTime?
+  createdAt DateTime  @default(now())
+
+  jogador Jogador @relation(fields: [jogadorId], references: [id], onDelete: Cascade)
+
+  @@index([jogadorId])
+}
+
+model Pagamento {
+  id        String   @id @default(cuid())
+  agendaId  String
+  nome      String
+  pago      Boolean  @default(false)
+  valor     Decimal? @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  agenda Agenda @relation(fields: [agendaId], references: [id], onDelete: Cascade)
+
+  @@unique([agendaId, nome])
+}

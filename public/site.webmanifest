@@ -1,0 +1,24 @@
+{
+  "name": "PEBOL KOPOHA",
+  "short_name": "PEBOL",
+  "description": "Organize teu pebol — RSVP, lista online, PIX e cartão de jogador",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F0FDF4",
+  "theme_color": "#16A34A",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/brand/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/brand/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
