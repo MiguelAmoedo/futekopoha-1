@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   CalendarIcon,
+  LayoutGridIcon,
   ShieldIcon,
   TrophyIcon,
   UserPlusIcon,
@@ -70,6 +71,16 @@ export default function HomePage() {
           >
             <UserPlusIcon data-icon="inline-start" />
             Criar cartão de jogador
+          </Button>
+          <Button
+            nativeButton={false}
+            render={<Link href="/camp" />}
+            variant="secondary"
+            size="lg"
+            className="min-h-12 w-full cursor-pointer border border-green-900/20 bg-white/70 text-base font-semibold text-foreground backdrop-blur-sm hover:bg-white/85"
+          >
+            <LayoutGridIcon data-icon="inline-start" />
+            Copa Resenha (camp)
           </Button>
         </div>
       </section>

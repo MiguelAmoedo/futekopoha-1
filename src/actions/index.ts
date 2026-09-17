@@ -19,3 +19,14 @@ export {
 } from "./jogador";
 
 export { togglePagamento, listPagamentos, setPagamentoStatus } from "./pagamento";
+
+export {
+  updateMatchResult,
+  setMatchStatus,
+  advanceKnockoutBracket,
+  updateTeamLineup,
+  verifyAdminAccess,
+  verifyTeamManagerAccess,
+  type UpdateMatchInput,
+  type UpdateLineupInput,
+} from "./camp";

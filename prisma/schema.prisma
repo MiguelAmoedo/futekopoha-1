@@ -93,3 +93,109 @@ model Pagamento {
 
   @@unique([agendaId, nome])
 }
+
+enum CampTeamKey {
+  A
+  B
+  C
+  D
+}
+
+enum CampMatchPhase {
+  FASE1
+  SEMIFINAL
+  FINAL
+}
+
+enum CampMatchStatus {
+  SCHEDULED
+  LIVE
+  FINISHED
+}
+
+enum CampPlayerRole {
+  LINHA
+  GOLEIRO
+}
+
+enum CampBracketSlot {
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+  WINNER_SEMI_1
+  WINNER_SEMI_2
+}
+
+model CampTournament {
+  id                   String   @id @default(cuid())
+  slug                 String   @unique
+  name                 String
+  subtitle             String
+  format               String
+  matchDurationMinutes Int      @default(5)
+  totalDurationMinutes Int      @default(45)
+  penaltyRule          String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  teams   CampTeam[]
+  matches CampMatch[]
+}
+
+model CampTeam {
+  id           String      @id @default(cuid())
+  tournamentId String
+  key          CampTeamKey
+  name         String
+  captain      String
+  colorClass   String
+  managerToken String?     @unique
+
+  tournament  CampTournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  players     CampPlayer[]
+  homeMatches CampMatch[]  @relation("HomeTeam")
+  awayMatches CampMatch[]  @relation("AwayTeam")
+
+  @@unique([tournamentId, key])
+  @@index([tournamentId])
+}
+
+model CampPlayer {
+  id       String         @id @default(cuid())
+  teamId   String
+  name     String
+  role     CampPlayerRole
+  number   Int
+  goals    Int            @default(0)
+  assists  Int            @default(0)
+  inLineup Boolean        @default(false)
+
+  team CampTeam @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@index([teamId])
+}
+
+model CampMatch {
+  id                 String           @id @default(cuid())
+  tournamentId       String
+  phase              CampMatchPhase
+  roundLabel         String
+  orderIndex         Int
+  homeTeamId         String?
+  awayTeamId         String?
+  homeBracketSlot    CampBracketSlot?
+  awayBracketSlot    CampBracketSlot?
+  durationMinutes    Int              @default(5)
+  status             CampMatchStatus  @default(SCHEDULED)
+  homeScore          Int?
+  awayScore          Int?
+  decidedByPenalties Boolean          @default(false)
+
+  tournament CampTournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  homeTeam   CampTeam?      @relation("HomeTeam", fields: [homeTeamId], references: [id], onDelete: SetNull)
+  awayTeam   CampTeam?      @relation("AwayTeam", fields: [awayTeamId], references: [id], onDelete: SetNull)
+
+  @@unique([tournamentId, orderIndex])
+  @@index([tournamentId])
+}
