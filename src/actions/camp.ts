@@ -13,7 +13,7 @@ import { fetchTournamentFromDb, TOURNAMENT_SLUG } from "@/lib/camp/tournament-da
 import type { TeamId } from "@/lib/camp/types";
 import { db } from "@/lib/db";
 
-const CAMP_PATHS = ["/camp", "/camp/torneio", "/camp/times", "/camp/admin"];
+const CAMP_PATHS = ["/", "/camp", "/camp/torneio", "/camp/times", "/camp/admin"];
 
 function revalidateCamp() {
   for (const path of CAMP_PATHS) {

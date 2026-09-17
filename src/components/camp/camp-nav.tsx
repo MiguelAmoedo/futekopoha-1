@@ -10,7 +10,7 @@ import { CAMP_NAV_ITEMS } from "@/lib/camp/constants";
 import { cn } from "@/lib/utils";
 
 const NAV_ICONS = {
-  "/camp/torneio": LayoutGridIcon,
+  "/": LayoutGridIcon,
   "/camp/times": ShieldIcon,
 } as const;
 

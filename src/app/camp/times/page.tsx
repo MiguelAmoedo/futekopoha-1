@@ -21,7 +21,7 @@ export default async function CampTimesPage() {
     <CampShell
       title="Times"
       subtitle="Liverpool · Real Madrid · Time C · Time D"
-      backHref="/camp/torneio"
+      backHref="/"
       className="gap-4"
     >
       <CampTimesView teams={teams} />

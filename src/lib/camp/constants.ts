@@ -1,5 +1,5 @@
 export const CAMP_NAV_ITEMS = [
-  { href: "/camp/torneio", label: "Camp", match: "prefix" as const },
+  { href: "/", label: "Camp", match: "exact" as const },
   { href: "/camp/times", label: "Times", match: "prefix" as const },
 ] as const;
 
