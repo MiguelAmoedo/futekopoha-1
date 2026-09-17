@@ -25,7 +25,7 @@ export default async function CampAdminPage({ searchParams }: CampAdminPageProps
 
   if (!tournament) {
     return (
-      <CampShell title="Admin" subtitle="Camp" hideNav backHref="/camp">
+      <CampShell title="Admin" subtitle="Camp" hideNav backHref="/camp/torneio">
         <div className="camp-surface camp-card p-4 text-sm text-muted-foreground">
           <p>Torneio não encontrado no banco.</p>
           <p className="mt-2">
@@ -44,7 +44,7 @@ export default async function CampAdminPage({ searchParams }: CampAdminPageProps
     <CampShell
       title="Admin"
       subtitle={tournament.name}
-      backHref="/camp"
+      backHref="/camp/torneio"
       hideNav
       className="gap-4"
     >

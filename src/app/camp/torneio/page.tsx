@@ -10,6 +10,7 @@ import { CampTournamentTabs } from "@/components/camp/camp-tournament-tabs";
 
 import { TeamFilterRow } from "@/components/camp/team-filter-row";
 
+import { CAMP_EVENT_SUMMARY } from "@/lib/camp/constants";
 import { getTournamentData } from "@/lib/camp/tournament-data";
 
 import { Button } from "@/components/ui/button";
@@ -42,8 +43,6 @@ export default async function CampTorneioPage() {
 
       subtitle={tournament.name}
 
-      backHref="/camp"
-
     >
 
       <CampCard
@@ -52,7 +51,7 @@ export default async function CampTorneioPage() {
 
         title={tournament.subtitle}
 
-        description="Fase 1 completa → semifinais 1º×4º e 2º×3º → final"
+        description={`${CAMP_EVENT_SUMMARY} · Fase 1 → semifinais 1º×4º e 2º×3º → final`}
 
         contentClassName="text-sm text-muted-foreground"
 

@@ -9,6 +9,7 @@ import {
   CampTeamKey,
   PrismaClient,
 } from "../src/generated/prisma/client";
+import { formatCampEventSubtitle } from "../src/lib/camp/constants";
 import ws from "ws";
 
 neonConfig.webSocketConstructor = ws;
@@ -32,30 +33,30 @@ const TEAM_DEFS: {
 }[] = [
   {
     key: CampTeamKey.A,
-    name: "Time A",
-    captain: "Rafa",
+    name: "Liverpool",
+    captain: "Miguel",
     colorClass: "bg-sky-600 text-white",
     managerToken: "camp-manager-a",
   },
   {
     key: CampTeamKey.B,
-    name: "Time B",
-    captain: "Miguel",
-    colorClass: "bg-amber-500 text-amber-950",
+    name: "Real Madrid",
+    captain: "Luiz Felipe",
+    colorClass: "bg-red-600 text-white",
     managerToken: "camp-manager-b",
   },
   {
     key: CampTeamKey.C,
     name: "Time C",
-    captain: "Leo",
-    colorClass: "bg-violet-600 text-white",
+    captain: "Renan",
+    colorClass: "bg-emerald-600 text-white",
     managerToken: "camp-manager-c",
   },
   {
     key: CampTeamKey.D,
     name: "Time D",
-    captain: "Gui",
-    colorClass: "bg-rose-600 text-white",
+    captain: "MF",
+    colorClass: "bg-yellow-500 text-yellow-950",
     managerToken: "camp-manager-d",
   },
 ];
@@ -69,26 +70,34 @@ const PLAYERS: {
   assists: number;
   inLineup: boolean;
 }[] = [
-  { key: CampTeamKey.A, name: "Rafa", role: CampPlayerRole.GOLEIRO, number: 1, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.A, name: "Pedro", role: CampPlayerRole.LINHA, number: 7, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.A, name: "Dudu", role: CampPlayerRole.LINHA, number: 10, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.A, name: "Zeca", role: CampPlayerRole.LINHA, number: 4, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.A, name: "Lucas", role: CampPlayerRole.LINHA, number: 8, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.B, name: "Miguel", role: CampPlayerRole.GOLEIRO, number: 1, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.B, name: "Caio", role: CampPlayerRole.LINHA, number: 9, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.B, name: "Breno", role: CampPlayerRole.LINHA, number: 11, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.B, name: "Lipe", role: CampPlayerRole.LINHA, number: 5, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.B, name: "Diego", role: CampPlayerRole.LINHA, number: 7, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.C, name: "Leo", role: CampPlayerRole.GOLEIRO, number: 1, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.C, name: "Nando", role: CampPlayerRole.LINHA, number: 8, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.C, name: "Marcos", role: CampPlayerRole.LINHA, number: 3, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.C, name: "Fábio", role: CampPlayerRole.LINHA, number: 9, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.C, name: "Renan", role: CampPlayerRole.LINHA, number: 11, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.D, name: "Gui", role: CampPlayerRole.GOLEIRO, number: 1, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.D, name: "Tito", role: CampPlayerRole.LINHA, number: 6, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.D, name: "Vini", role: CampPlayerRole.LINHA, number: 10, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.D, name: "Guga", role: CampPlayerRole.LINHA, number: 4, goals: 0, assists: 0, inLineup: true },
-  { key: CampTeamKey.D, name: "Thiago", role: CampPlayerRole.LINHA, number: 9, goals: 0, assists: 0, inLineup: true },
+  // Liverpool (A)
+  { key: CampTeamKey.A, name: "A definir", role: CampPlayerRole.GOLEIRO, number: 1, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.A, name: "Miguel", role: CampPlayerRole.LINHA, number: 10, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.A, name: "Rafael", role: CampPlayerRole.LINHA, number: 7, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.A, name: "Levy", role: CampPlayerRole.LINHA, number: 8, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.A, name: "A definir", role: CampPlayerRole.LINHA, number: 9, goals: 0, assists: 0, inLineup: true },
+  // Real Madrid (B)
+  { key: CampTeamKey.B, name: "A definir", role: CampPlayerRole.GOLEIRO, number: 1, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.B, name: "Luiz Felipe", role: CampPlayerRole.LINHA, number: 10, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.B, name: "Lukas", role: CampPlayerRole.LINHA, number: 7, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.B, name: "Felipe", role: CampPlayerRole.LINHA, number: 8, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.B, name: "Gabriel", role: CampPlayerRole.LINHA, number: 9, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.B, name: "William", role: CampPlayerRole.LINHA, number: 11, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.B, name: "Paulinho", role: CampPlayerRole.LINHA, number: 5, goals: 0, assists: 0, inLineup: false },
+  // Time C
+  { key: CampTeamKey.C, name: "A definir", role: CampPlayerRole.GOLEIRO, number: 1, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.C, name: "Renan", role: CampPlayerRole.LINHA, number: 10, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.C, name: "A definir", role: CampPlayerRole.LINHA, number: 7, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.C, name: "A definir", role: CampPlayerRole.LINHA, number: 8, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.C, name: "A definir", role: CampPlayerRole.LINHA, number: 9, goals: 0, assists: 0, inLineup: true },
+  // Time D
+  { key: CampTeamKey.D, name: "A definir", role: CampPlayerRole.GOLEIRO, number: 1, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.D, name: "MF", role: CampPlayerRole.LINHA, number: 10, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.D, name: "Guilherme Leite", role: CampPlayerRole.LINHA, number: 7, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.D, name: "Carlos Manoel", role: CampPlayerRole.LINHA, number: 6, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.D, name: "Liedson Paes", role: CampPlayerRole.LINHA, number: 8, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.D, name: "André Pantoja", role: CampPlayerRole.LINHA, number: 9, goals: 0, assists: 0, inLineup: true },
+  { key: CampTeamKey.D, name: "A definir", role: CampPlayerRole.LINHA, number: 5, goals: 0, assists: 0, inLineup: false },
 ];
 
 async function main() {
@@ -98,7 +107,7 @@ async function main() {
     data: {
       slug: TOURNAMENT_SLUG,
       name: "Copa Resenha Kopoha 1",
-      subtitle: "5x5 · 4 na linha + 1 no gol",
+      subtitle: formatCampEventSubtitle("5x5 · 4 na linha + 1 no gol"),
       format: "Todos x todos + mata-mata (1º×4º, 2º×3º) + final",
       matchDurationMinutes: 5,
       totalDurationMinutes: 45,

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import type { CampTeam, TeamId } from "@/lib/camp/types";
 import { teamIdToSlug } from "@/lib/camp/mock-data";
@@ -38,13 +37,12 @@ export function CampTimesView({ teams }: CampTimesViewProps) {
 
       <div className="flex flex-col gap-4">
         {visibleTeams.map(({ team, position }) => (
-          <Link
+          <TeamCard
             key={team.id}
+            team={team}
+            standingPosition={position}
             href={`/camp/times/${teamIdToSlug(team.id)}`}
-            className="block rounded-xl focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--camp-gold)]/50"
-          >
-            <TeamCard team={team} standingPosition={position} />
-          </Link>
+          />
         ))}
       </div>
     </>

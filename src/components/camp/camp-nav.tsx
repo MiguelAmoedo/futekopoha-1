@@ -3,18 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  HomeIcon,
   LayoutGridIcon,
   ShieldIcon,
-  UsersIcon,
 } from "lucide-react";
 import { CAMP_NAV_ITEMS } from "@/lib/camp/constants";
 import { cn } from "@/lib/utils";
 
 const NAV_ICONS = {
-  "/camp": HomeIcon,
   "/camp/torneio": LayoutGridIcon,
-  "/camp/jogadores": UsersIcon,
   "/camp/times": ShieldIcon,
 } as const;
 
@@ -29,7 +25,7 @@ export function CampNav() {
   return (
     <nav
       aria-label="Navegação do campeonato"
-      className="camp-bottom-nav grid grid-cols-4 gap-1 p-1"
+      className="camp-bottom-nav grid grid-cols-2 gap-1 p-1"
     >
       {CAMP_NAV_ITEMS.map(({ href, label, match }) => {
         const Icon = NAV_ICONS[href];

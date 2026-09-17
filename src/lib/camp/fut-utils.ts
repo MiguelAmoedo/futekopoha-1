@@ -59,15 +59,6 @@ export function starCount(rating: number): number {
   return 1;
 }
 
-export function playerInitials(name: string): string {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
-
 export type FutCardStat = {
   label: string;
   value: number;

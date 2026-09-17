@@ -10,7 +10,8 @@ import {
   TOURNAMENT_SLUG,
 } from "@/lib/camp/tournament-data";
 import { getLineupPlayers } from "@/lib/camp/tournament-utils";
-import { teamSlugToId, TEAM_SLUGS } from "@/lib/camp/mock-data";
+import { teamSlugToId } from "@/lib/camp/mock-data";
+import { ALL_TEAM_ROUTE_SLUGS } from "@/lib/camp/teams-config";
 import { verifyTeamManagerAccess } from "@/actions/camp";
 
 type GerenciarPageProps = {
@@ -19,14 +20,16 @@ type GerenciarPageProps = {
 };
 
 export function generateStaticParams() {
-  return TEAM_SLUGS.map((teamId) => ({ teamId }));
+  return ALL_TEAM_ROUTE_SLUGS.map((teamId) => ({ teamId }));
 }
 
 export async function generateMetadata({ params }: GerenciarPageProps): Promise<Metadata> {
   const { teamId: slug } = await params;
   const teamId = teamSlugToId(slug);
+  const tournament = await getTournamentData();
+  const team = teamId ? tournament.teams.find((t) => t.id === teamId) : undefined;
   return {
-    title: teamId ? `Gerenciar · Time ${teamId}` : "Gerenciar time",
+    title: team ? `Gerenciar · ${team.name}` : "Gerenciar time",
     description: "Escalação e elenco — Copa Resenha Kopoha 1",
   };
 }

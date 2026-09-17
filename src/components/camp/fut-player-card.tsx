@@ -1,3 +1,5 @@
+import { UserIcon } from "lucide-react";
+
 import type { CampPlayer } from "@/lib/camp/types";
 import { getTeamById } from "@/lib/camp/mock-data";
 import {
@@ -5,7 +7,6 @@ import {
   futPosition,
   futRating,
   getTeamColor,
-  playerInitials,
   starCount,
 } from "@/lib/camp/fut-utils";
 import { cn } from "@/lib/utils";
@@ -19,6 +20,8 @@ type FutPlayerCardProps = {
   chemistryStyle?: string;
   className?: string;
   style?: React.CSSProperties;
+  as?: "article" | "div";
+  iconOnly?: boolean;
 };
 
 const SIZE_CLASS: Record<FutPlayerCardSize, string> = {
@@ -35,21 +38,24 @@ export function FutPlayerCard({
   chemistryStyle,
   className,
   style,
+  as: Comp = "article",
+  iconOnly = false,
 }: FutPlayerCardProps) {
   const team = getTeamById(player.teamId);
   const rating = futRating(player);
   const position = futPosition(player, lineIndex);
-  const initials = playerInitials(player.name);
   const stars = starCount(rating);
   const chem = chemistryStyle ?? (position === "MC" ? "BAS" : position);
-  const stats = size === "xs" ? [] : futCardStats(player);
-  const showDecor = size !== "xs";
+  const stats = iconOnly || size === "xs" ? [] : futCardStats(player);
+  const showDecor = !iconOnly && size !== "xs";
+  const showName = !iconOnly;
+  const showStrip = !iconOnly;
 
   return (
-    <article
+    <Comp
       className={cn("fut-card", SIZE_CLASS[size], "fut-card--gold", className)}
       style={style}
-      aria-label={`${player.name}, ${rating} OVR, ${position}`}
+      aria-label={Comp === "article" ? `${player.name}, ${rating} OVR, ${position}` : undefined}
     >
       <div className="fut-card__shell" aria-hidden="true">
         <span className="fut-card__flare" />
@@ -66,7 +72,7 @@ export function FutPlayerCard({
         <div className="fut-card__photo">
           <div className="fut-card__photo-rays" aria-hidden="true" />
           <span className="fut-card__initials" aria-hidden="true">
-            {initials}
+            <UserIcon />
           </span>
           {showDecor ? (
             <>
@@ -83,9 +89,11 @@ export function FutPlayerCard({
           ) : null}
         </div>
 
-        <div className="fut-card__name-row">
-          <span className="fut-card__name">{player.name}</span>
-        </div>
+        {showName ? (
+          <div className="fut-card__name-row">
+            <span className="fut-card__name">{player.name}</span>
+          </div>
+        ) : null}
 
         {stats.length > 0 ? (
           <div className="fut-card__stats" aria-hidden="true">
@@ -98,19 +106,21 @@ export function FutPlayerCard({
           </div>
         ) : null}
 
-        <div className="fut-card__strip">
-          <span
-            className="fut-card__team-badge"
-            style={{ background: getTeamColor(player.teamId) }}
-            title={team?.name}
-            aria-hidden="true"
-          />
-          <span className="fut-card__league-shield" aria-hidden="true" />
-          <span className="fut-card__number" aria-hidden="true">
-            #{player.number}
-          </span>
-        </div>
+        {showStrip ? (
+          <div className="fut-card__strip">
+            <span
+              className="fut-card__team-badge"
+              style={{ background: getTeamColor(player.teamId) }}
+              title={team?.name}
+              aria-hidden="true"
+            />
+            <span className="fut-card__league-shield" aria-hidden="true" />
+            <span className="fut-card__number" aria-hidden="true">
+              #{player.number}
+            </span>
+          </div>
+        ) : null}
       </div>
-    </article>
+    </Comp>
   );
 }

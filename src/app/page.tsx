@@ -74,7 +74,7 @@ export default function HomePage() {
           </Button>
           <Button
             nativeButton={false}
-            render={<Link href="/camp" />}
+            render={<Link href="/camp/torneio" />}
             variant="secondary"
             size="lg"
             className="min-h-12 w-full cursor-pointer border border-green-900/20 bg-white/70 text-base font-semibold text-foreground backdrop-blur-sm hover:bg-white/85"

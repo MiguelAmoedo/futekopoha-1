@@ -30,13 +30,8 @@ import {
 
 import { getLineupPlayers } from "@/lib/camp/tournament-utils";
 
-import {
-
-  TEAM_SLUGS,
-
-  teamSlugToId,
-
-} from "@/lib/camp/mock-data";
+import { teamSlugToId } from "@/lib/camp/mock-data";
+import { ALL_TEAM_ROUTE_SLUGS, teamIdToRouteSlug } from "@/lib/camp/teams-config";
 
 import { Button } from "@/components/ui/button";
 
@@ -54,7 +49,7 @@ type CampTeamPageProps = {
 
 export function generateStaticParams() {
 
-  return TEAM_SLUGS.map((teamId) => ({ teamId }));
+  return ALL_TEAM_ROUTE_SLUGS.map((teamId) => ({ teamId }));
 
 }
 
@@ -144,7 +139,7 @@ export default async function CampTeamPage({ params }: CampTeamPageProps) {
 
       title={team.name}
 
-      subtitle="4 na linha + 1 no gol · 5×5"
+      subtitle={`Capitão: ${team.captain} · 4 na linha + 1 no gol · 5×5`}
 
       eyebrow={standing ? `${standing.position}º na tabela` : undefined}
 
@@ -160,7 +155,11 @@ export default async function CampTeamPage({ params }: CampTeamPageProps) {
 
         nativeButton={false}
 
-        render={<Link href={`/camp/times/${slug}/gerenciar?token=camp-manager-${slug}`} />}
+        render={
+          <Link
+            href={`/camp/times/${teamIdToRouteSlug(teamId)}/gerenciar?token=camp-manager-${teamId.toLowerCase()}`}
+          />
+        }
 
         variant="outline"
 

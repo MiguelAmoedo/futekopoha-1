@@ -1095,32 +1095,32 @@
       oklch(0.28 0.04 260) 0%,
       oklch(0.12 0.025 260) 100%
     );
-    font-family: var(--font-heading), var(--font-sans), system-ui, sans-serif;
-    font-size: 0.85rem;
-    font-weight: 800;
-    color: oklch(0.92 0.04 260);
-    text-shadow: 0 2px 6px oklch(0 0 0 / 0.6);
+    color: var(--fut-text);
     box-shadow:
       inset 0 2px 8px oklch(0 0 0 / 0.5),
       0 0 12px -2px var(--fut-accent-muted);
   }
 
+  .fut-card__initials svg {
+    width: 58%;
+    height: 58%;
+    stroke-width: 1.75;
+    filter: drop-shadow(0 2px 6px oklch(0 0 0 / 0.6));
+  }
+
   .fut-card--sm .fut-card__initials {
     width: 1.85rem;
     height: 1.85rem;
-    font-size: 0.58rem;
   }
 
   .fut-card--xs .fut-card__initials {
     width: 1.35rem;
     height: 1.35rem;
-    font-size: 0.46rem;
   }
 
   .fut-card--lg .fut-card__initials {
     width: 4.1rem;
     height: 4.1rem;
-    font-size: 1.25rem;
   }
 
   .fut-card__name-row {
@@ -1577,6 +1577,14 @@
   }
 
   /* ── FUT card grid (list view) ── */
+  .team-roster .fut-card,
+  .team-roster .fut-card:hover {
+    width: var(--fut-card-w-xs);
+    height: var(--fut-card-h-xs);
+    transform: none;
+    filter: none;
+  }
+
   .fut-card-grid {
     display: flex;
     flex-wrap: wrap;
